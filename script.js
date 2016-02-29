@@ -6,6 +6,8 @@ var lastRain = 0;
 var destroy_bodies = [];
 var phrases = ["Tu as perdu ton ame !", "Aaahh .. mettre des batons dans les roux !", "Roux roux ... rouuux"];
 var idPhrase = Math.floor(Math.random() * phrases.length);
+var minRain = 20;
+var currentRain = 60;
 
 var   b2Vec2 = Box2D.Common.Math.b2Vec2
 ,	b2BodyDef = Box2D.Dynamics.b2BodyDef
@@ -151,10 +153,10 @@ function createWalls(){
 	//create ground
 	bodyDef.type = b2Body.b2_staticBody;
 	bodyDef.position.x = 9;
-	bodyDef.position.y = 15;
+	bodyDef.position.y = 20;
 	fixDef.shape = new b2PolygonShape;
 	
-	fixDef.shape.SetAsBox(20, 0.5);
+	fixDef.shape.SetAsBox(32, 0.5);
 	world.CreateBody(bodyDef).CreateFixture(fixDef);
 
 	bodyDef.position.x = 0;
@@ -162,7 +164,7 @@ function createWalls(){
 	fixDef.shape.SetAsBox(0.5, 20);
 	world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-	bodyDef.position.x = 27;
+	bodyDef.position.x = 40;
 	bodyDef.position.y = 0;
 	fixDef.shape.SetAsBox(0.5, 20);
 	world.CreateBody(bodyDef).CreateFixture(fixDef);
@@ -171,7 +173,7 @@ function createWalls(){
 }
 
 function setup() {
-	createCanvas(800, 480);
+	createCanvas(1200, 800);
 	world = new b2World(
 			new b2Vec2(0, 10)    //gravity
 			,  true                 //allow sleep
@@ -239,7 +241,7 @@ function keyPressed() {
 	var vec;
 	switch (keyCode){
 		case LEFT_ARROW:
-			 vec = (new b2Vec2(-1, 0));
+			vec = (new b2Vec2(-1, 0));
 		break;
 		case RIGHT_ARROW:
 			vec = (new b2Vec2(1, 0));
@@ -261,9 +263,10 @@ function keyPressed() {
 }
 
 function rain() {
-	if(lastRain > 50){
-		batons.push(new Baton(new b2Vec2(Math.random()*30, -10)));
+	if(lastRain > currentRain){
+		batons.push(new Baton(new b2Vec2(Math.random()*40, -10)));
 		lastRain = 0;
+		currentRain -= currentRain > minRain ? 1 : 0;
 	}
 	lastRain++;
 }
@@ -297,7 +300,6 @@ function draw() {
 	update();
 
 	background(255);
-
 	world.DrawDebugData();
 	fill(0);
 	for(var i = 0; i < particules.length; i++){
