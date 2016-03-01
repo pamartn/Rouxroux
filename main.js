@@ -100,13 +100,9 @@ function keyPressed() {
 			vec = (new b2Vec2(0, 1));
 		break;
 	}
-	if(vec){
-		for(var i = 0; i < balls.length; i++){
-			var p = balls[i];
-			p.move(vec);
-		}
-
-	}
+	if(vec)
+		for(var i = 0; i < balls.length; i++)
+			balls[i].move(vec);
 }
 
 function rain() {
