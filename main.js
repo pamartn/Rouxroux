@@ -29,7 +29,7 @@ function createWalls(){
 }
 
 function setup() {
-	createCanvas(1200, 800);
+	createCanvas(1200, 600);
 	world = new b2World(
 			new b2Vec2(0, 10)    //gravity
 			,  true                 //allow sleep
@@ -69,6 +69,13 @@ function setup() {
 	}
 	this.world.SetContactListener(listener);
 
+	window.addEventListener("keydown", function(e) {
+	    // space and arrow keys
+	         if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+	                 e.preventDefault();
+	                     }
+	                     }, false);
+
 	//setup debug draw
 	var debugDraw = new b2DebugDraw();
 	debugDraw.SetSprite(document.getElementById("defaultCanvas0").getContext("2d"));
@@ -82,6 +89,8 @@ function setup() {
 
 function preload() {
 	ballImg = loadImage('roux.png');
+	stickImg = loadImage('stick.png');
+	backgroundImg = loadImage('background.jpg');
 }
 
 function keyPressed() {
@@ -108,6 +117,10 @@ function keyPressed() {
 function rain() {
 	if(lastRain > currentRain){
 		sticks.push(new Stick(new b2Vec2(Math.random()*40, -10)));
+		if(balls.length > 0){
+			score+=10/balls.length;
+			score = Math.floor(score);
+		}
 		lastRain = 0;
 		currentRain -= currentRain > minRain ? 1 : 0;
 	}
@@ -153,7 +166,9 @@ function draw() {
 	//Clear background
 	background(255);
 	world.DrawDebugData();
-	
+
+	image(backgroundImg, 0, 0, 1200, 700);
+
 	//Draw balls
 	for(var i = 0; i < balls.length; i++)
 		balls[i].draw();
@@ -162,6 +177,10 @@ function draw() {
 	for(var i = 0; i < sticks.length; i++)
 		sticks[i].draw();
 	
+	textSize(32);
+	fill(255, 0, 0);
+	text("Score : " + score, 400, 60);
+
 	//Draw end game message
 	if(balls.length == 0){
 		textSize(32);

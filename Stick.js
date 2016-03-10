@@ -45,6 +45,7 @@ Stick.prototype.draw = function(){
 	fill(127);
 
 	rect(-this.largeur*15, -this.longueur*15, this.largeur*30, this.longueur*30);	
+	image(stickImg, -this.largeur*30, -this.longueur*15, this.largeur*2*30, this.longueur*30);
 	fill(255, 0, 0);
 	
 

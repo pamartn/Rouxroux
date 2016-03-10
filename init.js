@@ -4,10 +4,13 @@ var sticks = [];
 var ballImg;
 var lastRain = 0;
 var destroy_bodies = [];
-var phrases = ["Tu as perdu ton ame !", "Aaahh .. mettre des sticks dans les roux !", "Roux roux ... rouuux"];
+var phrases = ["Tu as perdu ton ame !", "Aaahh .. mettre des batons dans les roux !", "Roux roux ... rouuux"];
 var idPhrase = Math.floor(Math.random() * phrases.length);
 var minRain = 20;
 var currentRain = 60;
+var score = 0;
+var backgroundImg;
+
 
 var   b2Vec2 = Box2D.Common.Math.b2Vec2
 ,	b2BodyDef = Box2D.Dynamics.b2BodyDef
