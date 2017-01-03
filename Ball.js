@@ -35,6 +35,12 @@ Ball.prototype.draw = function(){
 		translate(this.getPosition().x*30, this.getPosition().y*30);
 		rotate(angle);
 		image(ballImg, -this.radius*30, -this.radius*30, this.radius*2*30, this.radius*2*30);
+		if(this.message_time > 0){
+			textSize(20);
+			fill('red');
+			text(this.message, this.radius*30 + 20, this.radius*30 - 20);
+			this.message_time--;
+		}
 		rotate(-angle);
 		translate(-this.getPosition().x*30, -this.getPosition().y*30);
 	}
@@ -50,10 +56,14 @@ Ball.prototype.die = function(){
 	var index = balls.indexOf(this);
 	balls.splice(index, 1);
 	destroy_bodies.push(this.body);
-
+	
 	if(this.radius > 0.6){
-		for(var i = 0; i < 2; i++)	
-			balls.push(new Ball(this.getPosition(), this.radius/1.5));
+		for(var i = 0; i < 2; i++){
+			var b = new Ball(this.getPosition(), this.radius/1.5);
+			b.message = "Outch";
+			b.message_time = 100;
+			balls.push(b);
+		}
 	}
 }
 

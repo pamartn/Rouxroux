@@ -179,7 +179,7 @@ function draw() {
 	
 	textSize(32);
 	fill(255, 0, 0);
-	text("Score : " + score, 400, 60);
+	text("Score : " + score, 400, 100);
 
 	//Draw end game message
 	if(balls.length == 0){
